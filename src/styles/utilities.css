@@ -24,6 +24,16 @@
     background-color: var(--primary-hover-color);
 }
 
+.btn.btn-light {
+    background-color: #fff;
+    color: var(--primary-color);
+}
+
+.btn.btn-light:hover {
+    background-color: #fff;
+    color: var(--primary-color);
+}
+
 .btn.btn-outline {
     background: transparent;
     color: var(--primary-color);
