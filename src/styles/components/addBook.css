@@ -47,7 +47,3 @@
 #add-book-page button:focus {
     outline: none;
 }
-
-/* #add-book-page button svg {
-    fill: var(--primary-color);
-} */

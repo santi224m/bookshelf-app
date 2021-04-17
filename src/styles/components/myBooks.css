@@ -22,3 +22,13 @@
     justify-content: space-between;
     align-items: center;
 }
+
+#my-books-page .page-header .list-year-wrap button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#my-books-page .page-header .list-year-wrap button:focus {
+    outline: none;
+}
