@@ -1,3 +1,53 @@
 #add-book-page .page-header {
     background: url('../../img/books-bg.png') no-repeat center center/cover;
 }
+
+#add-book-page .page-header h3 {
+    font-size: 32px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+#add-book-page form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#add-book-page input {
+    padding: 15px 5px;
+    width: 460px;
+    margin-right: 14px;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+#add-book-page input:focus {
+    outline: none;
+}
+
+#add-book-page button {
+    height: 48px;
+    width: 48px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    fill: var(--primary-color);
+}
+
+#add-book-page button:hover {
+    background-color: var(--primary-color);
+    fill: #fff;
+}
+
+#add-book-page button:focus {
+    outline: none;
+}
+
+/* #add-book-page button svg {
+    fill: var(--primary-color);
+} */

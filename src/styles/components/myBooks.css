@@ -1,0 +1,24 @@
+#my-books-page .page-header {
+    text-align: center;
+    background: url('../../img/my-books-bg.png') no-repeat center center/cover;
+}
+
+#my-books-page .page-header h2 {
+    font-size: 44px;
+    font-weight: 400;
+}
+
+#my-books-page .page-header p {
+    font-size: 18px;
+}
+
+#my-books-page .page-header .list-year {
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+#my-books-page .page-header .list-year-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
