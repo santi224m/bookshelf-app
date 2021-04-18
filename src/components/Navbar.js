@@ -1,9 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import MobileNavbar from './MobileNavbar';
+import {
+    authSignIn,
+    authSignOut,
+    updateUserSignedIn,
+} from '../modules/firebaseAuth';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
-const Navbar = () => {
+const Navbar = props => {
     const [navOpen, setNavOpen] = useState(false);
+
+    useEffect(() => {
+        updateUserSignedIn(props);
+    }, [props]);
+
+    const renderAuthBtn = () => {
+        if (props.isSignedIn === false) {
+            return (
+                <button className='btn' onClick={() => authSignIn(props)}>
+                    Sign In
+                </button>
+            );
+        } else if (props.isSignedIn) {
+            return (
+                <button className='link' onClick={() => authSignOut(props)}>
+                    Sign Out
+                </button>
+            );
+        }
+    };
 
     return (
         <>
@@ -16,15 +43,17 @@ const Navbar = () => {
                         <Link to='/' className='link'>
                             Home
                         </Link>
-                        <Link to='/my-books' className='link'>
-                            My Books
-                        </Link>
-                        <Link to='/' className='link'>
-                            Sign In
-                        </Link>
-                        <Link to='/add-book' className='btn'>
-                            Add Book
-                        </Link>
+                        {props.isSignedIn && (
+                            <Link to='/my-books' className='link'>
+                                My Books
+                            </Link>
+                        )}
+                        {renderAuthBtn()}
+                        {props.isSignedIn && (
+                            <Link to='/add-book' className='btn'>
+                                Add Book
+                            </Link>
+                        )}
                     </div>
                     <div
                         id='mobile-menu'
@@ -42,4 +71,8 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+const mapStateToProps = state => {
+    return { isSignedIn: state.auth.isSignedIn };
+};
+
+export default connect(mapStateToProps, actions)(Navbar);

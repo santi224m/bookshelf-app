@@ -16,15 +16,22 @@
     font-size: 20px;
 }
 
-#navbar .links a.link {
+#navbar .links .link {
     text-decoration: none;
     color: var(--dark-color);
     padding-right: 30px;
     font-size: 16px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-#navbar .links a.link:hover {
+#navbar .links .link:hover {
     color: var(--primary-color);
+}
+
+#navbar .links .link:focus {
+    outline: none;
 }
 
 #navbar #mobile-menu {
