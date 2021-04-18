@@ -10,20 +10,17 @@ const AddBook = () => {
         e.preventDefault();
         const formatSearchTitle = searchTitle.replace(/ /g, '+');
         axios
-        .get(`http://openlibrary.org/search.json?q=${formatSearchTitle}`)
-        .then(res => {
-            res.data.docs.forEach(book => {
-                console.log(book);
-                if (book.isbn && book.isbn.length > 0) {
-                    updateSearchResults(oldArr => [ ...oldArr, { isbn: BooksList.isbn[0] }]);
-                }
-            })
-        });
+            .get(
+                `https://www.googleapis.com/books/v1/volumes?q=${formatSearchTitle}`
+            )
+            .then(({ data }) => {
+                updateSearchResults(data.items);
+            });
     };
 
     useEffect(() => {
         console.log(searchResults);
-    }, [searchResults])
+    }, [searchResults]);
 
     return (
         <div id='add-book-page'>
@@ -46,7 +43,7 @@ const AddBook = () => {
                     </form>
                 </div>
             </div>
-            <BooksList />
+            <BooksList books={searchResults} />
         </div>
     );
 };

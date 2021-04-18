@@ -1,29 +1,42 @@
-const BooksList = () => {
+const BooksList = ({ books }) => {
     const renderList = () => {
-        const arr = [1,2,3,4,5,6,7,8,9,10,11,12];
-        return arr.map(card => {
+        // Remove books that don't have covers
+        if (!books) {
+            return;
+        }
+        const booksArr = books.filter(
+            book =>
+                book.volumeInfo.imageLinks &&
+                book.volumeInfo.pageCount &&
+                book.volumeInfo.authors
+        );
+        return booksArr.map(book => {
             return (
-                <div key={card} className="book-card">
-                    <div className="book-card-img">
-                        <img src="https://covers.openlibrary.org/b/id/1-M.jpg" alt="Book Cover"/>
-                        <div className="book-card-hover">
-                            <button className="btn btn-light">Add Book</button>
+                <div key={book.id} className='book-card'>
+                    <div className='book-card-img'>
+                        <img
+                            src={book.volumeInfo.imageLinks.thumbnail}
+                            alt={book.volumeInfo.title}
+                        />
+                        <div className='book-card-hover'>
+                            <button className='btn btn-light'>Add Book</button>
                         </div>
                     </div>
-                    <p className="book-title">Survival of the Fittest</p>
-                    <p className="book-length">411 pages</p>
+                    <p className='book-title'>{book.volumeInfo.title}</p>
+                    <p className='book-title'>{book.volumeInfo.authors[0]}</p>
+                    <p className='book-length'>
+                        {book.volumeInfo.pageCount} Pages
+                    </p>
                 </div>
             );
-        })
-    }
+        });
+    };
 
     return (
-        <div id="books-list">
-            <div className="container">
-                {renderList()}
-            </div>
+        <div id='books-list'>
+            <div className='container'>{renderList()}</div>
         </div>
     );
-}
+};
 
 export default BooksList;
