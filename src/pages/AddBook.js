@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BooksList from '../components/BooksList';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 
 const AddBook = () => {
     const [searchTitle, updateSearchTitle] = useState('');
@@ -20,6 +21,9 @@ const AddBook = () => {
 
     return (
         <div id='add-book-page'>
+            <Helmet>
+                <title>Bookshelf | Add Book</title>
+            </Helmet>
             <div className='page-header'>
                 <div className='container'>
                     <h3>Search for a book</h3>

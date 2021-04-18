@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import BooksList from '../components/BooksList';
 import { connect } from 'react-redux';
 import { db } from '../firebase/config';
+import { Helmet } from 'react-helmet';
 
 const MyBooks = props => {
     const [year, setYear] = useState(new Date().getFullYear());
@@ -37,6 +38,9 @@ const MyBooks = props => {
 
     return (
         <div id='my-books-page'>
+            <Helmet>
+                <title>Bookshelf | My Books</title>
+            </Helmet>
             <div className='page-header'>
                 <div className='container'>
                     <h2>My Books</h2>

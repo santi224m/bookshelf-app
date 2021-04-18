@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
     return (
         <div id='home-page'>
+            <Helmet>
+                <title>Bookshelf</title>
+            </Helmet>
             <div className='container'>
                 <div className='home-content'>
                     <h1>Keep track of your books</h1>
