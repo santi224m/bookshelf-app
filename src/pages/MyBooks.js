@@ -6,25 +6,37 @@ import { db } from '../firebase/config';
 const MyBooks = props => {
     const [year, setYear] = useState(new Date().getFullYear());
     const [userBooks, setUserBooks] = useState([]);
+    const [filteredUserBooks, updateFilteredUserBooks] = useState([]);
+    const [userPagesRead, setUserPagesRead] = useState(0);
 
     useEffect(() => {
         db.ref(`/users/${props.userId}`).on('value', snapshot => {
             const data = snapshot.val();
             if (data) {
-                Object.values(data.books).forEach(book => {
-                    setUserBooks(oldArr => [...oldArr, book.book]);
-                });
+                if (data.books) {
+                    Object.values(data.books).forEach(book => {
+                        setUserBooks(oldArr => [...oldArr, book.book]);
+                        setUserPagesRead(userPagesRead + book.book.volumeInfo.pageCount);
+                    });
+                }
             }
         });
     }, [props.userId]);
+
+    useEffect(() => {
+        console.log(year)
+        let newArr = userBooks.filter(book => book.dateAdded === year);
+        updateFilteredUserBooks(newArr);
+        console.log(newArr);
+    }, [year])
 
     return (
         <div id='my-books-page'>
             <div className='page-header'>
                 <div className='container'>
                     <h2>My Books</h2>
-                    <p>Books: 37</p>
-                    <p>Pages: 16,432</p>
+                    <p>Books: {userBooks.length}</p>
+                    <p>Pages: {userPagesRead}</p>
                     <div className='list-year-wrap'>
                         <button onClick={() => setYear(year - 1)}>
                             <img

@@ -6,6 +6,7 @@ const BooksList = ({ books, userId }) => {
     const handleAddBook = book => {
         db.ref('users/' + userId + '/books/' + book.id).set({
             book: book,
+            dateAdded: new Date().getFullYear()
         });
 
         history.push('/my-books');
