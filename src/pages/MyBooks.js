@@ -6,25 +6,42 @@ import { db } from '../firebase/config';
 const MyBooks = props => {
     const [year, setYear] = useState(new Date().getFullYear());
     const [userBooks, setUserBooks] = useState([]);
+    const [filteredUserBooks, updateFilteredUserBooks] = useState([]);
 
     useEffect(() => {
         db.ref(`/users/${props.userId}`).on('value', snapshot => {
             const data = snapshot.val();
             if (data) {
-                Object.values(data.books).forEach(book => {
-                    setUserBooks(oldArr => [...oldArr, book.book]);
-                });
+                if (data.books) {
+                    Object.values(data.books).forEach(book => {
+                        setUserBooks(oldArr => [...oldArr, book]);
+                    });
+                }
             }
         });
     }, [props.userId]);
+
+    useEffect(() => {
+        let newArr = userBooks.filter(book => book.dateAdded === year);
+        updateFilteredUserBooks(newArr.map(book => book.book));
+    }, [userBooks, year]);
+
+    const renderPagesRead = () => {
+        let pagesCount = 0;
+        filteredUserBooks.forEach(book => {
+            pagesCount += book.volumeInfo.pageCount;
+        });
+
+        return pagesCount;
+    };
 
     return (
         <div id='my-books-page'>
             <div className='page-header'>
                 <div className='container'>
                     <h2>My Books</h2>
-                    <p>Books: 37</p>
-                    <p>Pages: 16,432</p>
+                    <p>Books: {filteredUserBooks.length}</p>
+                    <p>Pages: {renderPagesRead()}</p>
                     <div className='list-year-wrap'>
                         <button onClick={() => setYear(year - 1)}>
                             <img
@@ -39,7 +56,12 @@ const MyBooks = props => {
                     </div>
                 </div>
             </div>
-            <BooksList books={userBooks} />
+            <BooksList books={filteredUserBooks} />
+            {filteredUserBooks.length === 0 && (
+                <div className='no-books-message container'>
+                    No books for this year
+                </div>
+            )}
         </div>
     );
 };
