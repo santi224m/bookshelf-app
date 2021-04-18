@@ -1,9 +1,22 @@
-const BooksList = ({ books }) => {
+import { db } from '../firebase/config';
+import { connect } from 'react-redux';
+import history from '../history';
+
+const BooksList = ({ books, userId }) => {
+    const handleAddBook = book => {
+        db.ref('users/' + userId + '/books/' + book.id).set({
+            book: book,
+        });
+
+        history.push('/my-books');
+    };
+
     const renderList = () => {
         // Remove books that don't have covers
         if (!books) {
             return;
         }
+        console.log(books);
         const booksArr = books.filter(
             book =>
                 book.volumeInfo.imageLinks &&
@@ -19,7 +32,12 @@ const BooksList = ({ books }) => {
                             alt={book.volumeInfo.title}
                         />
                         <div className='book-card-hover'>
-                            <button className='btn btn-light'>Add Book</button>
+                            <button
+                                className='btn btn-light'
+                                onClick={() => handleAddBook(book)}
+                            >
+                                Add Book
+                            </button>
                         </div>
                     </div>
                     <p className='book-title'>{book.volumeInfo.title}</p>
@@ -39,4 +57,8 @@ const BooksList = ({ books }) => {
     );
 };
 
-export default BooksList;
+const mapStateToProps = state => {
+    return { userId: state.auth.userId };
+};
+
+export default connect(mapStateToProps)(BooksList);

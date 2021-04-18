@@ -18,10 +18,6 @@ const AddBook = () => {
             });
     };
 
-    useEffect(() => {
-        console.log(searchResults);
-    }, [searchResults]);
-
     return (
         <div id='add-book-page'>
             <div className='page-header'>

@@ -32,3 +32,8 @@
 #my-books-page .page-header .list-year-wrap button:focus {
     outline: none;
 }
+
+#my-books-page #books-list .book-card .book-card-img:hover .book-card-hover {
+    display: none;
+    cursor: pointer;
+}

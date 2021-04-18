@@ -1,8 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BooksList from '../components/BooksList';
+import { connect } from 'react-redux';
+import { db } from '../firebase/config';
 
-const MyBooks = () => {
+const MyBooks = props => {
     const [year, setYear] = useState(new Date().getFullYear());
+    const [userBooks, setUserBooks] = useState([]);
+
+    useEffect(() => {
+        db.ref(`/users/${props.userId}`).on('value', snapshot => {
+            const data = snapshot.val();
+            if (data) {
+                Object.values(data.books).forEach(book => {
+                    setUserBooks(oldArr => [...oldArr, book.book]);
+                });
+            }
+        });
+    }, [props.userId]);
 
     return (
         <div id='my-books-page'>
@@ -25,9 +39,13 @@ const MyBooks = () => {
                     </div>
                 </div>
             </div>
-            <BooksList />
+            <BooksList books={userBooks} />
         </div>
     );
 };
 
-export default MyBooks;
+const mapStateToProps = state => {
+    return { userId: state.auth.userId };
+};
+
+export default connect(mapStateToProps)(MyBooks);
