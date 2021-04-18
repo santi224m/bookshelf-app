@@ -1,13 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BooksList from '../components/BooksList';
+import axios from 'axios';
 
 const AddBook = () => {
     const [searchTitle, updateSearchTitle] = useState('');
+    const [searchResults, updateSearchResults] = useState([]);
 
     const handleSubmit = e => {
         e.preventDefault();
-        alert(searchTitle);
+        const formatSearchTitle = searchTitle.replace(/ /g, '+');
+        axios
+        .get(`http://openlibrary.org/search.json?q=${formatSearchTitle}`)
+        .then(res => {
+            res.data.docs.forEach(book => {
+                console.log(book);
+                if (book.isbn && book.isbn.length > 0) {
+                    updateSearchResults(oldArr => [ ...oldArr, { isbn: BooksList.isbn[0] }]);
+                }
+            })
+        });
     };
+
+    useEffect(() => {
+        console.log(searchResults);
+    }, [searchResults])
 
     return (
         <div id='add-book-page'>
