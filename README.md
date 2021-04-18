@@ -1,5 +1,5 @@
 # Getting Bookshelf-App on your local machine
-Bookshelf app was created to help you keep track of the books you have read. It uses the Google Books api to find books and it uses firebase to store user information.
+Bookshelf app was created to help you keep track of the books you have read. It uses the Google Books API to find books and it uses firebase to store user information.
 
 ## Clone repository and install dependencies
 
