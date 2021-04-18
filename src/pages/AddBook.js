@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BooksList from '../components/BooksList';
+import axios from 'axios';
 
 const AddBook = () => {
     const [searchTitle, updateSearchTitle] = useState('');
+    const [searchResults, updateSearchResults] = useState([]);
 
     const handleSubmit = e => {
         e.preventDefault();
-        alert(searchTitle);
+        const formatSearchTitle = searchTitle.replace(/ /g, '+');
+        axios
+            .get(
+                `https://www.googleapis.com/books/v1/volumes?q=${formatSearchTitle}`
+            )
+            .then(({ data }) => {
+                updateSearchResults(data.items);
+            });
     };
+
+    useEffect(() => {
+        console.log(searchResults);
+    }, [searchResults]);
 
     return (
         <div id='add-book-page'>
@@ -30,7 +43,7 @@ const AddBook = () => {
                     </form>
                 </div>
             </div>
-            <BooksList />
+            <BooksList books={searchResults} />
         </div>
     );
 };
