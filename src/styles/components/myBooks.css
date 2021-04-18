@@ -35,5 +35,14 @@
 
 #my-books-page #books-list .book-card .book-card-img:hover .book-card-hover {
     display: none;
-    cursor: pointer;
+}
+
+.no-books-message {
+    width: 100%;
+    background-color: #dff0ff;
+    /* border: 2px solid #2185d0; */
+    padding: 14px 21px;
+    border-radius: 5px;
+    color: #2185d0;
+    box-shadow: 0 0 0 1px #2185d0 inset, 0 0 0 0 transparent;
 }

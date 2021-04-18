@@ -10,11 +10,12 @@ export const authSignIn = () => {
         .getRedirectResult()
         .then(function (result) {
             var user = result.user;
-            console.log('handleAuto user: ');
-            db.ref('users/' + user.uid).set({
-                _id: user.uid,
-            });
-            actions.signIn(user.uid);
+            if (user) {
+                db.ref('users/' + user.uid).set({
+                    _id: user.uid,
+                });
+                actions.signIn(user.uid);
+            }
         });
 
     // Start a sign in process for an unauthenticated user.
