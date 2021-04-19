@@ -21,6 +21,7 @@
     margin-right: 14px;
     font-size: 14px;
     color: var(--primary-color);
+    border: none;
 }
 
 #add-book-page input:focus {
@@ -46,4 +47,24 @@
 
 #add-book-page button:focus {
     outline: none;
+}
+
+@media only screen and (max-width: 768px) {
+    #add-book-page form {
+        position: relative;
+    }
+
+    #add-book-page input {
+        margin-right: 0;
+        position: relative;
+    }
+
+    #add-book-page button {
+        background-color: #fff;
+        border-radius: 0;
+        height: 46px;
+        position: absolute;
+        right: 0;
+        height: 100%;
+    }
 }
