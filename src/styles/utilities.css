@@ -87,6 +87,7 @@
     border-radius: 5px;
     color: #2185d0;
     box-shadow: 0 0 0 1px #2185d0 inset, 0 0 0 0 transparent;
+    margin-bottom: 25px;
 }
 
 @media only screen and (max-width: 768px) {
