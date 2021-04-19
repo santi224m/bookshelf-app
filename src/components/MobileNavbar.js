@@ -1,16 +1,46 @@
 import { Link } from 'react-router-dom';
+import { authSignIn, authSignOut } from '../modules/firebaseAuth';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
 
-const MobileNavbar = () => {
+const MobileNavbar = props => {
+    const handleClick = () => {
+        props.updateNav(false);
+    };
+
+    const handleSignOut = () => {
+        authSignOut(props);
+        props.updateNav(false);
+    };
+
+    const handleSignIn = () => {
+        authSignIn(props);
+        props.updateNav(false);
+    };
+
     return (
         <div id='mobile-navbar'>
-            <Link to='/'>Home</Link>
-            <Link to='/my-books'>My Books</Link>
-            <Link to='/add-book'>Add Book</Link>
-            <Link to='/' className='btn'>
-                Sign Out
+            <Link to='/' onClick={handleClick}>
+                Home
             </Link>
+            <Link to='/my-books' onClick={handleClick}>
+                My Books
+            </Link>
+            <Link to='/add-book' onClick={handleClick}>
+                Add Book
+            </Link>
+            {props.isSignedIn && (
+                <button className='btn' onClick={handleSignOut}>
+                    Sign Out
+                </button>
+            )}
+            {!props.isSignedIn && (
+                <button className='btn' onClick={handleSignIn}>
+                    Sign In
+                </button>
+            )}
         </div>
     );
 };
 
-export default MobileNavbar;
+export default connect(null, actions)(MobileNavbar);

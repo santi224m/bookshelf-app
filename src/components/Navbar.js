@@ -66,7 +66,12 @@ const Navbar = props => {
                     </div>
                 </div>
             </nav>
-            {navOpen && <MobileNavbar />}
+            {navOpen && (
+                <MobileNavbar
+                    updateNav={setNavOpen}
+                    isSignedIn={props.isSignedIn}
+                />
+            )}
         </>
     );
 };
