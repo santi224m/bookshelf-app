@@ -2,14 +2,18 @@ import { db } from '../firebase/config';
 import { connect } from 'react-redux';
 import history from '../history';
 
-const BooksList = ({ books, userId, year }) => {
+const BooksList = ({ books, userId }) => {
     const handleAddBook = book => {
-        db.ref('users/' + userId + '/books/' + book.id).set({
-            book: book,
-            dateAdded: new Date().getFullYear(),
-        });
+        if (userId) {
+            db.ref('users/' + userId + '/books/' + book.id).set({
+                book: book,
+                dateAdded: new Date().getFullYear(),
+            });
 
-        history.push('/my-books');
+            history.push('/my-books');
+        } else {
+            alert('Please sign in');
+        }
     };
 
     const renderList = () => {
@@ -32,7 +36,10 @@ const BooksList = ({ books, userId, year }) => {
                                 src={book.volumeInfo.imageLinks.thumbnail}
                                 alt={book.volumeInfo.title}
                             />
-                            <div className='book-card-hover'>
+                            <div
+                                className='book-card-hover'
+                                style={{ display: `${!userId ? 'none' : ''}` }}
+                            >
                                 <button
                                     className='btn btn-light'
                                     onClick={() => handleAddBook(book)}
@@ -56,6 +63,11 @@ const BooksList = ({ books, userId, year }) => {
 
     return (
         <div id='books-list'>
+            {!userId && (
+                <div className='no-books-message container'>
+                    Please sign in to add a book to your account
+                </div>
+            )}
             <div className='container'>{renderList()}</div>
         </div>
     );

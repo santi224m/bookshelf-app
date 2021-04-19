@@ -33,6 +33,7 @@
 #books-list .book-card .book-title {
     font-size: 14px;
     margin: 15px 0;
+    max-width: 180px;
 }
 
 #books-list .book-card .book-title:first-of-type {
@@ -86,5 +87,9 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+    }
+
+    #books-list .book-card .book-title {
+        max-width: 100%;
     }
 }

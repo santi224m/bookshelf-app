@@ -61,7 +61,7 @@ const MyBooks = props => {
                 </div>
             </div>
             <BooksList books={filteredUserBooks} />
-            {filteredUserBooks.length === 0 && (
+            {props.userId && filteredUserBooks.length === 0 && (
                 <div className='no-books-message container'>
                     No books for this year
                 </div>
