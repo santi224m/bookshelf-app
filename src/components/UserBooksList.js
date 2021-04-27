@@ -1,6 +1,5 @@
 import { db } from '../firebase/config';
 import { connect } from 'react-redux';
-import history from '../history';
 
 const UserBooksList = ({ books, userId }) => {
     const handleRemoveBook = book => {
