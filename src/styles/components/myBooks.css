@@ -33,6 +33,11 @@
     outline: none;
 }
 
-#my-books-page #books-list .book-card .book-card-img:hover .book-card-hover {
-    display: none;
+#my-books-page #books-list .book-card .book-card-hover {
+    background-color: #f54242;
+}
+
+#my-books-page #books-list .book-card .book-card-hover .btn.btn-light {
+    width: 80%;
+    color: #f54242;
 }
