@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react';
-import BooksList from '../components/BooksList';
+import UserBooksList from '../components/UserBooksList';
 import { connect } from 'react-redux';
 import { db } from '../firebase/config';
 import { Helmet } from 'react-helmet';
 
 const MyBooks = props => {
-    const [year, setYear] = useState(new Date().getFullYear());
+    const [year, setYear] = useState(null);
     const [userBooks, setUserBooks] = useState([]);
     const [filteredUserBooks, updateFilteredUserBooks] = useState([]);
+
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+
+        return () => {
+            setYear(null);
+        };
+    }, []);
 
     useEffect(() => {
         db.ref(`/users/${props.userId}`).on('value', snapshot => {
             const data = snapshot.val();
             if (data) {
                 if (data.books) {
+                    setUserBooks([]);
                     Object.values(data.books).forEach(book => {
                         setUserBooks(oldArr => [...oldArr, book]);
                     });
@@ -60,7 +69,7 @@ const MyBooks = props => {
                     </div>
                 </div>
             </div>
-            <BooksList books={filteredUserBooks} />
+            <UserBooksList books={filteredUserBooks} />
             {props.userId && filteredUserBooks.length === 0 && (
                 <div className='no-books-message container'>
                     No books for this year
