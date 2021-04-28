@@ -1,5 +1,7 @@
 import keys from '../config/keys';
 import firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/auth';
 
 var firebaseConfig = {
     apiKey: keys.apiKey,
